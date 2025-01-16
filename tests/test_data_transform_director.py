@@ -1,5 +1,4 @@
 from unittest.mock import patch
-import pytest
 from app.services.data_transform_director import DataTransformDirector
 from tests.data_example.transformated_data_example import get_transformated_data_example
 from tests.mocks.aws_provider_mock import AWSProviderMock
