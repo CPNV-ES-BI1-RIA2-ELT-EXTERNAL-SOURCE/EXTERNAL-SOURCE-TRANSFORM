@@ -1,7 +1,5 @@
 def get_xml_object_example():
-    return {
-    "type": "xml",
-    "raw": '''<data>
+    return '''<data>
   <stop>
     <id>8501120</id>
     <name>Lausanne</name>
@@ -68,5 +66,4 @@ def get_xml_object_example():
   <request>null</request>
   <eof>1</eof>
 </data>
-''',
-}
+'''
