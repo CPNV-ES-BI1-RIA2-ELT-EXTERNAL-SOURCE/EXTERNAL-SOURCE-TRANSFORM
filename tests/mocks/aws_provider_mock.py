@@ -9,7 +9,7 @@ class AWSProviderMock(CloudProvider):
         self.format_converter = FormatConverter()
 
     def download(self, path: str) -> dict:
-        return self.format_converter.convert(self.data["raw"], self.data["type"])
+        return self.format_converter.convert(self.data)
 
     def _connect(self):
         pass

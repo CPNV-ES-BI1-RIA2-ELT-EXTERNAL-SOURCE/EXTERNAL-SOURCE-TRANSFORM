@@ -5,10 +5,10 @@ name = "pypi"
 
 [packages]
 fastapi = {extras = ["standard"], version = "*"}
-pytest = "*"
 pydantic-settings = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.12"
