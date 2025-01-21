@@ -1,1 +1,1 @@
-from .transform_request import TransformRequest
+from .job_request import JobRequest
