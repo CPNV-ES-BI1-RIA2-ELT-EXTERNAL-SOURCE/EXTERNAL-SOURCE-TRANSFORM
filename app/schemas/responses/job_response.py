@@ -4,7 +4,3 @@ from app.schemas.departure import Departure
 
 class JobResponse(BaseModel):
     dataSource: str
-
-
-class JobDownloadResponse(BaseModel):
-    any: []

@@ -1,19 +1,20 @@
 def get_transformated_data_example():
     return {
   "name": "Lausanne",
+  "long": 6.629087,
+  "lat": 46.516795,
   "departures": [
     {
-      "departureStationName": "Lausanne",
       "destinationStationName": "Vallorbe",
       "viaStationNames": [
         "Prilly-Malley",
         "Renens VD",
         "Bussigny"
       ],
-      "departureTime": "2024-01-12 00:02:00",
+      "departureTime": 1705014120,
       "train": {
-        "g": "R",
-        "l": "4",
+        "type": "R",
+        "line": "4",
       },
       "platform": "81",
       "sector": "DG",

@@ -8,7 +8,7 @@ class JobManager:
         if not os.path.exists("jobs"):
             os.makedirs("jobs")
         file = open(f"jobs/{job_id}.json", "w")
-        file.write(json.dumps(job_data))
+        file.write(json.dumps(job_data, indent=4))
         file.close()
 
     @staticmethod

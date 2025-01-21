@@ -1,1 +1,1 @@
-from .job_response import JobResponse, JobDownloadResponse
+from .job_response import JobResponse
