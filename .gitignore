@@ -1,7 +1,5 @@
 .idea
-.env
 __pycache__/
 Pipfile.lock
-.env
 jobs
 mapping.json
