@@ -2,6 +2,9 @@ import json
 from datetime import datetime
 from typing import Optional
 
+from app.errors import UnableToProcessError
+
+
 class DataTransformBuilder:
     def __init__(self, input: dict):
         self._input = input
@@ -16,34 +19,37 @@ class DataTransformBuilder:
     def _transform(self, data: dict, mapping: list) -> dict:
         result = {}
         for map_item in mapping:
-            origin = map_item["origin"]
-            destination = map_item["destination"]
-            value = self._get_value(data, origin)
+            try:
+                origin = map_item["origin"]
+                destination = map_item["destination"]
+                value = self._get_value(data, origin)
 
-            if "method" in map_item:
-                for method in map_item["method"]:
-                    value = getattr(self, method)(value)
+                if "method" in map_item:
+                    for method in map_item["method"]:
+                        value = getattr(self, method)(value)
 
-            if "child" in map_item:
-                if map_item["childType"]:
-                    if map_item["childType"] == "object":
-                        for item in value:
-                            item = self._transform(item, map_item["child"])
-                    elif map_item["childType"] == "array":
-                        transformed_list = []
-                        for item in value:
-                            transformed_list.append(self._transform(item, map_item["child"]))
-                        value = transformed_list
-                else:
-                    value = self._transform(value, map_item["child"])
+                if "child" in map_item:
+                    if map_item["childType"]:
+                        if map_item["childType"] == "object":
+                            for item in value:
+                                item = self._transform(item, map_item["child"])
+                        elif map_item["childType"] == "array":
+                            transformed_list = []
+                            for item in value:
+                                transformed_list.append(self._transform(item, map_item["child"]))
+                            value = transformed_list
+                    else:
+                        value = self._transform(value, map_item["child"])
 
-            if "list" in map_item:
-                transformed_list = []
-                for item in value:
-                    transformed_list.append(item[map_item["list"]])
-                value = transformed_list
+                if "list" in map_item:
+                    transformed_list = []
+                    for item in value:
+                        transformed_list.append(item[map_item["list"]])
+                    value = transformed_list
 
-            self._set_value(result, destination, value)
+                self._set_value(result, destination, value)
+            except Exception as e:
+                raise UnableToProcessError()
         return result
 
     def _set_value(self, data: dict, path: str, value):

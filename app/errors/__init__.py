@@ -1,1 +1,4 @@
 from .unknown_format_error import UnknownFormatError
+from .ressource_not_found_error import RessourceNotFoundError
+from .unable_to_process_error import UnableToProcessError
+from .unable_to_reach_server_error import UnableToReachServerError
