@@ -1,1 +1,1 @@
-from .transform_response import TransformResponse
+from .job_response import JobResponse

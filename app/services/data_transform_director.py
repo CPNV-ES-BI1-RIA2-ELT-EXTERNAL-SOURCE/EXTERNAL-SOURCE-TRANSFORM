@@ -1,19 +1,29 @@
 from app.services.data_transform_builder import DataTransformBuilder
-from app.services.cloud_provider_factory import CloudProviderFactory
-from app.services.cloud_provider import CloudProvider
+from app.services.job_manager import JobManager
+from app.services.url_downloader import UrlDownloader
+
 
 class DataTransformDirector:
-    @staticmethod
-    def clean_station_departures(path: str) -> dict:
-        data = DataTransformDirector._load(path)
-        data_transform_builder = DataTransformBuilder(data)
-        return data_transform_builder.set_initial_station().set_departures().build()
 
     @staticmethod
-    def _initialize_cloud_provider(path: str) -> CloudProvider:
-        return CloudProviderFactory.get_cloud_provider(path)
+    def transform_job_data(job_id: int, data_uri: str) -> None:
+        if not JobManager.is_existing_job(job_id):
+            data = DataTransformDirector._download_data(data_uri)
+            data_transform_builder = DataTransformBuilder(data)
+            transformed_data = data_transform_builder.build()
+            JobManager.store_job(job_id, transformed_data)
 
     @staticmethod
-    def _load(path) -> dict:
-        cloud_provider = DataTransformDirector._initialize_cloud_provider(path)
-        return cloud_provider.download(path)
+    def download_job_data(job_id: int) -> dict:
+        if JobManager.is_existing_job(job_id):
+            return DataTransformDirector._load_job_data(job_id)
+        else:
+            raise Exception(f"Job {job_id} does not exist")
+
+    @staticmethod
+    def _download_data(path) -> dict:
+        return UrlDownloader().download(path).json()
+
+    @staticmethod
+    def _load_job_data(job_id: int) -> dict:
+        return JobManager.get_job(job_id)

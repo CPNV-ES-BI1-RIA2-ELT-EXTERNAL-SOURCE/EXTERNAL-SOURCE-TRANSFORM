@@ -1,16 +1,38 @@
+import pytest
+
+from app.errors import UnableToProcessError
 from app.services.data_transform_director import DataTransformDirector
+from app.services.job_manager import JobManager
+from tests.data_example.initial_data_example import get_initial_data_example
 from tests.data_example.transformated_data_example import get_transformated_data_example
-from unittest.mock import patch
-from tests.mocks.aws_provider_mock import AWSProviderMock
+from unittest.mock import patch, MagicMock
 
 
 class TestTransform:
 
-    @patch("app.services.cloud_provider_factory.CloudProviderFactory.get_cloud_provider")
-    def test_transform_objects(self, mock_get_cloud_provider):
-        # GIVEN
-        awsProviderMock = AWSProviderMock()
-        mock_get_cloud_provider.return_value = awsProviderMock
+    def setup_method(self):
+        JobManager.reset_jobs()
 
-        response = DataTransformDirector().clean_station_departures(get_transformated_data_example())
-        assert response == get_transformated_data_example()
+    @patch("app.services.data_transform_director.UrlDownloader.download")
+    def test_data_transform_director_transform_data_success(self, mock_download):
+        # GIVEN
+        mock_response = MagicMock()
+        mock_response.json.return_value = get_initial_data_example()
+        mock_download.return_value = mock_response
+
+        # WHEN
+        DataTransformDirector.transform_job_data(1, "https://path/to/objects")
+
+        # THEN
+        assert JobManager.get_job(1) == get_transformated_data_example()
+
+    @patch("app.services.data_transform_director.UrlDownloader.download")
+    def test_data_transform_director_transform_data_fail(self, mock_download):
+        # GIVEN
+        mock_response = MagicMock()
+        mock_response.json.return_value = {}
+        mock_download.return_value = mock_response
+
+        # WHEN
+        with pytest.raises(UnableToProcessError):
+            DataTransformDirector.transform_job_data(1, "https://path/to/objects")

@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 fastapi = {extras = ["standard"], version = "*"}
-pydantic-settings = "*"
+requests = "*"
 
 [dev-packages]
 pytest = "*"
