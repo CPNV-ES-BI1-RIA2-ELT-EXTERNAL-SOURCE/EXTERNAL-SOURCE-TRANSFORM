@@ -7,13 +7,15 @@ from unittest.mock import patch, MagicMock
 
 class TestTransform:
 
+    def setup_method(self):
+        JobManager.reset_jobs()
+
     @patch("app.services.data_transform_director.UrlDownloader.download")
     def test_data_transform_director_transform_data_success(self, mock_download):
         # GIVEN
         mock_response = MagicMock()
         mock_response.json.return_value = get_initial_data_example()
         mock_download.return_value = mock_response
-        JobManager.reset_jobs()
 
         # WHEN
         DataTransformDirector.transform_job_data(1, "https://path/to/objects")
