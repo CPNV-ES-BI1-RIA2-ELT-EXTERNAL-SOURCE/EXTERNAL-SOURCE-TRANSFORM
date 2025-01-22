@@ -5,3 +5,5 @@ docs
 .vscode
 README.md
 LICENSE.txt
+.venv
+jobs
