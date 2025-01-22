@@ -4,6 +4,7 @@ from app.errors import UnableToProcessError
 from app.services.data_transform_director import DataTransformDirector
 from app.services.job_manager import JobManager
 from tests.data_example.initial_data_example import get_initial_data_example
+from tests.data_example.json_object_example import get_json_object_example
 from tests.data_example.transformated_data_example import get_transformated_data_example
 from unittest.mock import patch, MagicMock
 
@@ -16,9 +17,7 @@ class TestTransform:
     @patch("app.services.data_transform_director.UrlDownloader.download")
     def test_data_transform_director_transform_data_success(self, mock_download):
         # GIVEN
-        mock_response = MagicMock()
-        mock_response.json.return_value = get_initial_data_example()
-        mock_download.return_value = mock_response
+        mock_download.return_value = get_json_object_example()
 
         # WHEN
         DataTransformDirector.transform_job_data(1, "https://path/to/objects")
@@ -29,9 +28,7 @@ class TestTransform:
     @patch("app.services.data_transform_director.UrlDownloader.download")
     def test_data_transform_director_transform_data_fail(self, mock_download):
         # GIVEN
-        mock_response = MagicMock()
-        mock_response.json.return_value = {}
-        mock_download.return_value = mock_response
+        mock_download.return_value = "{}"
 
         # WHEN
         with pytest.raises(UnableToProcessError):
