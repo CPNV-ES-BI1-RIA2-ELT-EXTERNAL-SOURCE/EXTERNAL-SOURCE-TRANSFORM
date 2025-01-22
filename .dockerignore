@@ -1,0 +1,7 @@
+tests
+.git
+__pycache__
+docs
+.vscode
+README.md
+LICENSE.txt
