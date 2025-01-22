@@ -127,6 +127,7 @@ The project uses [PEP8](https://peps.python.org/pep-0008) naming convention.
 
 ```sh
 ┣ app/
+┃ ┣ errors/
 ┃ ┣ models/
 ┃ ┣ routes/
 ┃ ┣ schemas/
