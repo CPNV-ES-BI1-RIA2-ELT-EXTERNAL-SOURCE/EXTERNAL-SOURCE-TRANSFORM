@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from app.schemas.requests import JobRequest
 from app.schemas.responses import JobResponse
 from app.services.data_transform_director import DataTransformDirector
@@ -15,5 +15,5 @@ def job_objects(job_id: int, request: JobRequest):
 @router.get("/{job_id}/download")
 def job_objects_download(job_id: int):
     if not JobManager.is_existing_job(job_id):
-        raise Exception(f"Job {job_id} does not exist in the system")
+        raise HTTPException(status_code=404, detail=f"Job {job_id} does not exist")
     return DataTransformDirector().download_job_data(job_id)
