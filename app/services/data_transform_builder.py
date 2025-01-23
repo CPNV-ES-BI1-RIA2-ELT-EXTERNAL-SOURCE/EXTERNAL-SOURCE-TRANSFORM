@@ -2,6 +2,8 @@ import json
 from datetime import datetime
 from typing import Optional
 
+from dns.name import empty
+
 from app.errors import UnableToProcessError
 
 
@@ -49,6 +51,7 @@ class DataTransformBuilder:
 
                 self._set_value(result, destination, value)
             except Exception as e:
+                print(f"Error: {e}", value)
                 raise UnableToProcessError()
         return result
 
@@ -74,16 +77,20 @@ class DataTransformBuilder:
         return data
 
     @staticmethod
-    def extract_sector(value: str) -> str:
+    def extract_sector(value: str) -> str|None:
         #split all first digits
+        if not value:
+            return None
         for index, char in enumerate(value):
             if not char.isdigit():
                 return value[index:]
         return value
 
     @staticmethod
-    def extract_platform(value: str) -> Optional[str]:
+    def extract_platform(value: str) -> Optional[str]|None:
         #remove all first digits
+        if not value:
+            return None
         for index, char in enumerate(value):
             if not char.isdigit():
                 return value[:index]
