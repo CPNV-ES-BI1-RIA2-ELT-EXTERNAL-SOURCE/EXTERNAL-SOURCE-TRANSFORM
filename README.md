@@ -55,15 +55,8 @@ pip install pipenv
     pipenv shell
     pipenv install --dev
     ```
-   
-3. Setup environment variables
 
-    ```sh
-    cp .env.example .env
-    # Edit the `.env` file and fill in the required variables.
-    ```
-
-4. Run the service
+3. Run the service
 
     ```sh
     faststapi dev
@@ -98,7 +91,7 @@ You'll be able to see all the available endpoints and test them there.
 ## Collaborate
 
 To collaborate on the project, the following conventions must be followed:
-- git management is based on [gitflow](https://www.atlassian.com/fr/git/tutorials/comparing-workflows/gitflow-workflow) conventions
+- git management is based on [gitflow](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional) conventions
 - each story must be created in a dedicated feature with the following naming: `feature/name-of-the-feature`.
 - commits must respect the following conventions:
   - `feat: implementation about something new in a feature`
