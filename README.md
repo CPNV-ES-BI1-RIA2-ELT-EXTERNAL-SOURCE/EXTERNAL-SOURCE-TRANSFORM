@@ -56,7 +56,13 @@ pip install pipenv
     pipenv install --dev
     ```
 
-3. Run the service
+3. Copy the mapping file
+
+    ```sh
+    cp mapping.json.example mapping.json
+    ```
+
+4. Run the service
 
     ```sh
     faststapi dev
@@ -76,8 +82,14 @@ pip install pipenv
     pipenv shell
     pipenv install
     ```
+   
+3. Copy the mapping file
 
-3. Run the service
+    ```sh
+    cp mapping.json.example mapping.json
+    ```
+
+4. Run the service
 
     ```sh
     faststapi run

@@ -1,0 +1,59 @@
+[
+	{
+		"origin": "stop/name",
+		"destination": "name"
+	},
+	{
+		"origin": "stop/lon",
+		"destination": "long"
+	},
+	{
+		"origin": "stop/lat",
+		"destination": "lat"
+	},
+	{
+		"origin": "connections",
+		"destination": "departures",
+		"childType": "array",
+		"child": [
+			{
+				"origin": "terminal/name",
+				"destination": "destinationStationName"
+			},
+			{
+				"origin": "subsequent_stops",
+				"destination": "viaStationNames",
+				"list": "name"
+			},
+			{
+				"origin": "time",
+				"destination": "departureTime",
+				"method": [
+					"convert_date_to_timestamp"
+				]
+			},
+			{
+				"origin": "*G",
+				"destination": "train/type"
+			},
+			{
+				"origin": "*L",
+				"destination": "train/line"
+			},
+			{
+				"origin": "track",
+				"destination": "platform",
+				"method": [
+					"extract_platform"
+				]
+			},
+			{
+				"origin": "track",
+				"destination": "sector",
+				"method": [
+					"extract_sector"
+				]
+			}
+		]
+	}
+]
