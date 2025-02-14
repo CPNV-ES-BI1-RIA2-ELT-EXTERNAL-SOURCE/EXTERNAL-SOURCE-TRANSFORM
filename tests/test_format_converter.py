@@ -4,11 +4,13 @@ from tests.data_example.json_object_example import get_json_object_example
 from app.services.format_converter import FormatConverter
 from app.errors.unknown_format_error import UnknownFormatError
 
+# TODO NGY Be more explicit by mentioning the expected result (success -> my bad)
 class TestFormatConverter:
     def test_format_converter_convert_json_success(self):
         # GIVEN
         data = get_json_object_example()
         converter = FormatConverter()
+        # TODO NGY Validate the given (context)
 
         # WHEN
         result = converter.convert(data)

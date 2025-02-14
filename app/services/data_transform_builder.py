@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from typing import Optional
 
+# TODO NGY Remove unused import statement
 from dns.name import empty
 
 from app.errors import UnableToProcessError
@@ -50,11 +51,13 @@ class DataTransformBuilder:
                     value = transformed_list
 
                 self._set_value(result, destination, value)
+            # TODO NGY Never catch "all" exception
             except Exception as e:
                 print(f"Error: {e}", value)
                 raise UnableToProcessError()
         return result
 
+    # TODO NGY consider to use static attribute for this method (pep8 recommendations)
     def _set_value(self, data: dict, path: str, value):
         keys = path.split('/')
         for key in keys[:-1]:
@@ -63,6 +66,7 @@ class DataTransformBuilder:
             data = data[key]
         data[keys[-1]] = value
 
+    # TODO NGY consider to use static attribute for this method (pep8 recommendations)
     def _get_value(self, data: dict, path: str):
         keys = path.split('/')
         for key in keys:
